@@ -3,16 +3,19 @@ steps:
     args:
       - 'build'
       - '-t'
-      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/quickstart-image:${_TAG}'
+      - '${_IMAGE_NAME}'
       - '.'
 
 images:
-  - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/quickstart-image:${_TAG}'
+  - '${_IMAGE_NAME}'
 
 options:
   substitution_option: 'ALLOW_LOOSE'
+  dynamic_substitutions: true
 
 substitutions:
   _REPOSITORY: 'quickstart'
+  _SERVICE_NAME: 'quickstart-app'
   _TAG: $SHORT_SHA        # $SHORT_SHA defined for builds invoked by triggers
   _REGION: 'us-central1'  # Default value, can be overridden
+  _IMAGE_NAME: 'us-central1-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_SERVICE_NAME}:${_TAG}'

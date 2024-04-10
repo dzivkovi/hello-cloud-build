@@ -4,7 +4,6 @@
 
 [https://cloud.google.com/build/docs/build-push-docker-image](https://cloud.google.com/build/docs/build-push-docker-image)
 
-
 ```bash
 
 # Set environment variables
@@ -32,6 +31,13 @@ gcloud artifacts repositories create $REPOSITORY --repository-format=docker --lo
 
 # Cloud Build setup
 gcloud builds submit --region=$REGION --tag $REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/quickstart-image:tag1
+
+# Use Cloud Build configuration file.
+gcloud builds submit --config cloudbuild.yaml \
+  --substitutions=_TAG="$(date +'%Y-%m-%d_%H%M')"
+
+# Read up on Dynamic Variable Substitutions at:
+# https://cloud.google.com/build/docs/configuring-builds/substitute-variable-values
 
 # Validate the image
 gcloud artifacts docker images list $REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY --include-tags
