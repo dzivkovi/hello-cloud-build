@@ -1,7 +1,14 @@
 steps:
 - name: 'gcr.io/cloud-builders/gcloud'
-  script: |
-    gcloud run deploy cloudrunservice --image us-docker.pkg.dev/cloudrun/container/hello --region us-central1 --platform managed --allow-unauthenticated
+  entrypoint: 'bash'
+  args:
+  - '-c'
+  - |
+    gcloud run deploy cloudrunservice \
+    --image ${_IMAGE_NAME} \
+    --region ${_REGION} \
+    --platform managed \
+    --allow-unauthenticated
 
 options:
   substitution_option: 'ALLOW_LOOSE'
@@ -11,5 +18,5 @@ substitutions:
   _REPOSITORY: 'container'
   _SERVICE_NAME: 'hello'
   _TAG: 'latest'
-  _REGION: 'us'  # Default value, can be overridden
-  _IMAGE_NAME: '${_REGION}-docker.pkg.dev/cloudrun/${_REPOSITORY}/${_SERVICE_NAME}:${_TAG}'
+  _REGION: 'us-central1'  # Default value, can be overridden
+  _IMAGE_NAME: 'us-docker.pkg.dev/cloudrun/${_REPOSITORY}/${_SERVICE_NAME}:${_TAG}'

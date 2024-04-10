@@ -34,13 +34,8 @@ gcloud iam service-accounts add-iam-policy-binding \
     --member=serviceAccount:$PROJECT_NUMBER@cloudbuild.gserviceaccount.com \
     --role=roles/iam.serviceAccountUser
 
-# Cloud Build setup
-# gcloud builds submit --region=$REGION --tag $REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY/quickstart-image:tag1
-gcloud builds submit --region=us-west2 --config cloudbuild.yaml
-
 # Use Cloud Build configuration file.
-gcloud builds submit --config cloudbuild.yaml \
-  --substitutions=_TAG=latest
+gcloud builds submit --config cloudbuild.yaml --substitutions=_REGION=us-west2
 
 # Read up on Dynamic Variable Substitutions at:
 # https://cloud.google.com/build/docs/configuring-builds/substitute-variable-values
