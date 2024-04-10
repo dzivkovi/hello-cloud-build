@@ -18,4 +18,4 @@ substitutions:
   _SERVICE_NAME: 'quickstart-app'
   _TAG: $SHORT_SHA        # $SHORT_SHA defined for builds invoked by triggers
   _REGION: 'us-central1'  # Default value, can be overridden
-  _IMAGE_NAME: 'us-central1-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_SERVICE_NAME}:${_TAG}'
+  _IMAGE_NAME: '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_SERVICE_NAME}:${_TAG}'
