@@ -1,7 +1,18 @@
 steps:
-- name: 'gcr.io/cloud-builders/docker'
-  script: |
-    docker build -t us-west2-docker.pkg.dev/$PROJECT_ID/quickstart-docker-repo/quickstart-image:tag1 .
-  automapSubstitutions: true
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/quickstart-image:${_TAG}'
+      - '.'
+
 images:
-- 'us-west2-docker.pkg.dev/$PROJECT_ID/quickstart-docker-repo/quickstart-image:tag1'
+  - '${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/quickstart-image:${_TAG}'
+
+options:
+  substitution_option: 'ALLOW_LOOSE'
+
+substitutions:
+  _REPOSITORY: 'quickstart'
+  _TAG: $SHORT_SHA        # $SHORT_SHA defined for builds invoked by triggers
+  _REGION: 'us-central1'  # Default value, can be overridden

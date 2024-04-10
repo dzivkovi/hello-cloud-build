@@ -7,7 +7,7 @@
 
 ```bash
 
-# GCP Project context
+# Set environment variables
 export PROJECT_ID=$(gcloud config get-value project)
 export PROJECT_NUMBER="$(gcloud projects describe ${PROJECT_ID} --format='get(projectNumber)')"
 
@@ -18,6 +18,7 @@ if [ "$REGION" = "(unset)" ] || [ -z "$REGION" ]; then
 fi
 echo "Region set to: $REGION"
 
+export REPOSITORY=quickstart
 
 # Atrifact Registry setup
 gcloud services enable cloudbuild.googleapis.com artifactregistry.googleapis.com \
@@ -27,7 +28,6 @@ gcloud services enable cloudbuild.googleapis.com artifactregistry.googleapis.com
 gcloud projects add-iam-policy-binding ${PROJECT_ID} --member=serviceAccount:${PROJECT_NUMBER}@cloudbuild.gserviceaccount.com \
     --role=roles/artifactregistry.writer
 
-export REPOSITORY=quickstart
 gcloud artifacts repositories create $REPOSITORY --repository-format=docker --location=$REGION --description="Docker repo"
 
 # Cloud Build setup
