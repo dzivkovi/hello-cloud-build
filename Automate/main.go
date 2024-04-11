@@ -19,5 +19,5 @@ import (
 )
 
 func main () {
-  fmt.Println("Hello, world!")
+  fmt.Println("Eid Mubarak! May this Eid bring peace, happiness, and prosperity to your life and may you continue to be blessed with Allah's grace.")
 }
