@@ -1,22 +1,28 @@
 # Automate builds by using Cloud Build
 
-## Modified Cloud Build Quickstart
+## Read-along Quickstart
 
 - Official Cloud Build examples [https://github.com/GoogleCloudPlatform/cloud-build-samples/tree/main/quickstart-automate](https://github.com/GoogleCloudPlatform/cloud-build-samples/tree/main/quickstart-automate)
 - Fork and clone above GCP repo (or this one [https://github.com/dzivkovi/hello-cloud-build](https://github.com/dzivkovi/hello-cloud-build))
 - Follow the instructions in [https://cloud.google.com/build/docs/automate-builds](https://cloud.google.com/build/docs/automate-builds)
 
-```bash
+## Post-Quickstart Steps
 
-# Set environment variables
-export PROJECT_ID=$(gcloud config get-value project)
-export PROJECT_NUMBER="$(gcloud projects describe ${PROJECT_ID} --format='get(projectNumber)')"
+- Identifying Trigger ID
 
-export REGION=$(gcloud config get-value compute/region)
-if [ "$REGION" = "(unset)" ] || [ -z "$REGION" ]; then
-  export REGION="us-central1"
-  gcloud config set compute/region $REGION
-fi
-echo "Region set to: $REGION"
+  ```bash
+  gcloud builds triggers list
+  ```
 
-export REPOSITORY=quickstart
+  In the output, each trigger block ends with an `id` field which uniquely identifies the trigger. e.g. `id: d51e16de-293e-4203-b6db-27bad1f70395`
+
+- Exporting Trigger Configuration
+
+  ```bash
+  gcloud builds triggers describe d51e16de-293e-4203-b6db-27bad1f70395 --format=json
+  ```
+
+## Advanced Tutorial
+
+- Cloud Run Canary Deployments: [https://www.cloudskillsboost.google/course_templates/691/labs/452141](https://www.cloudskillsboost.google/course_templates/691/labs/452141)
+- Code behind the Qwiklab: [Canary Deployments with Cloud Run and Cloud Build](https://github.com/GoogleCloudPlatform/software-delivery-workshop/tree/main/labs/cloudrun-progression)
